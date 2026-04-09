@@ -1063,8 +1063,7 @@ def test_request_retrieval_with_more_than_one(testdir: Testdir) -> None:
     """
     Single request cannot be returned if there is more than one matching.
     """
-    testdir.makepyfile(
-        """
+    testdir.makepyfile("""
         import httpx
         
         
@@ -1076,8 +1075,7 @@ def test_request_retrieval_with_more_than_one(testdir: Testdir) -> None:
                 client.get("https://test_url", headers={"X-TEST": "test header 2"})
         
             httpx_mock.get_request(url=httpx.URL("https://test_url"))
-    """
-    )
+    """)
     result = testdir.runpytest()
     result.assert_outcomes(failed=1)
     result.stdout.fnmatch_lines(
