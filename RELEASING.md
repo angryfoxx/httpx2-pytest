@@ -31,6 +31,8 @@ Version **1.0.0** is not on PyPI yet. `release-please-config.json` sets `"releas
 
 The manifest (`.release-please-manifest.json`) starts empty so release-please does not treat `1.0.0` as already released.
 
+`release-please-config.json` sets `bootstrap-sha` to the last upstream (`pytest_httpx`) commit before the HTTPX2 fork, so changelog and versioning only consider fork commits—not Colin’s full history.
+
 ## How releases work
 
 1. Merge changes into **`master`** using [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, etc.).
