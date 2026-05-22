@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2026-05-22
 ### Changed
-- Published as [`pytest-httpx2`](https://pypi.org/project/pytest-httpx2/) with import package `pytest_httpx2` (fork of pytest-httpx for HTTPX2).
+- Published as [`httpx2-pytest`](https://pypi.org/project/httpx2-pytest/) with import package `pytest_httpx2` (fork of pytest-httpx for HTTPX2).
 - Requires [`httpx2`](https://github.com/pydantic/httpx2)==2.\* instead of [`httpx`](https://www.python-httpx.org).
 - Documentation and examples now target HTTPX2 (`import httpx2`); the `httpx_mock` fixture name is unchanged.
 
