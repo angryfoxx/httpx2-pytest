@@ -1,11 +1,11 @@
 <h2 align="center">Send responses to HTTPX2 using pytest</h2>
 
 <p align="center">
-<a href="https://pypi.org/project/pytest-httpx2/"><img alt="pypi version" src="https://img.shields.io/pypi/v/pytest-httpx2"></a>
+<a href="https://pypi.org/project/httpx2-pytest/"><img alt="pypi version" src="https://img.shields.io/pypi/v/httpx2-pytest"></a>
 <a href="https://github.com/angryfoxx/pytest_httpx2/actions"><img alt="Build status" src="https://github.com/angryfoxx/pytest_httpx2/actions/workflows/Test/badge.svg"></a>
 <a href="https://codecov.io/gh/angryfoxx/pytest_httpx2"><img alt="Coverage" src="https://codecov.io/gh/angryfoxx/pytest_httpx2/branch/master/graph/badge.svg"/></a>
 <a href="https://github.com/angryfoxx/pytest_httpx2"><img alt="Number of tests" src="https://img.shields.io/badge/tests-338 passed-blue"></a>
-<a href="https://pypi.org/project/pytest-httpx2/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/pytest-httpx2"></a>
+<a href="https://pypi.org/project/httpx2-pytest/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/httpx2-pytest"></a>
 </p>
 
 ## About HTTPX2
@@ -24,10 +24,10 @@ import httpx2
 response = httpx2.get("https://www.example.org/")
 ```
 
-**pytest-httpx2** patches HTTPX2 transports so your tests never hit the network unless you opt out. Use `import httpx2` in your application and test code; the `httpx_mock` fixture intercepts `httpx2.Client` and `httpx2.AsyncClient` requests the same way pytest-httpx did for HTTPX.
+**httpx2-pytest** patches HTTPX2 transports so your tests never hit the network unless you opt out. Use `import httpx2` in your application and test code; the `httpx_mock` fixture intercepts `httpx2.Client` and `httpx2.AsyncClient` requests the same way pytest-httpx did for HTTPX.
 
 ```shell
-pip install pytest-httpx2
+pip install httpx2-pytest
 ```
 
 > [!NOTE]
@@ -50,7 +50,7 @@ Once installed, the `httpx_mock` or `httpx2_mock` [`pytest`](https://docs.pytest
   - [Register less responses than requested](#allow-to-not-register-responses-for-every-request)
   - [Allow to register a response for more than one request](#allow-to-register-a-response-for-more-than-one-request)
   - [Do not mock some requests](#do-not-mock-some-requests)
-- [Migrating](#migrating-to-pytest-httpx2)
+- [Migrating](#migrating-to-httpx2-pytest)
   - [responses](#from-responses)
   - [aioresponses](#from-aioresponses)
 
@@ -777,7 +777,7 @@ def pytest_collection_modifyitems(session, config, items):
 
 #### Allow to register more responses than what will be requested
 
-By default, `pytest-httpx2` will ensure that every response was requested during test execution.
+By default, `httpx2-pytest` will ensure that every response was requested during test execution.
 
 If you want to add an optional response, you can use the `is_optional` parameter when [registering a response](#add-responses) or [a callback](#add-callbacks).
 
@@ -817,7 +817,7 @@ def test_force_expected_request(httpx_mock):
 
 #### Allow to not register responses for every request
 
-By default, `pytest-httpx2` will ensure that every request that was issued was expected.
+By default, `httpx2-pytest` will ensure that every request that was issued was expected.
 
 You can use the `httpx_mock` marker `assert_all_requests_were_expected` option to allow more requests than what you registered responses for.
 
@@ -838,7 +838,7 @@ def test_more_requests_than_expected(httpx_mock):
 
 #### Allow to register a response for more than one request
 
-By default, `pytest-httpx2` will ensure that every request that was issued was expected.
+By default, `httpx2-pytest` will ensure that every request that was issued was expected.
 
 If you want to add a response once, while allowing it to match more than once, you can use the `is_reusable` parameter when [registering a response](#add-responses) or [a callback](#add-callbacks).
 
@@ -877,13 +877,13 @@ def test_more_requests_than_responses(httpx_mock):
 
 #### Do not mock some requests
 
-By default, `pytest-httpx2` will mock every request.
+By default, `httpx2-pytest` will mock every request.
 
 But, for instance, in case you want to write integration tests with other servers, you might want to let some requests go through.
 
 To do so, you can use the `httpx_mock` marker `should_mock` option and provide a callable expecting the [`httpx2.Request`](https://httpx2.pydantic.dev/api/#request) as parameter and returning a boolean.
 
-Returning `True` will ensure that the request is handled by `pytest-httpx2` (mocked), `False` will let the request pass through (not mocked).
+Returning `True` will ensure that the request is handled by `httpx2-pytest` (mocked), `False` will let the request pass through (not mocked).
 
 ```python
 import pytest
@@ -900,13 +900,13 @@ def test_partial_mock(httpx_mock):
         response2 = client.get("https://test_url")
 ```
 
-## Migrating to pytest-httpx2
+## Migrating to httpx2-pytest
 
-Here is how to migrate from well-known testing libraries to `pytest-httpx2`.
+Here is how to migrate from well-known testing libraries to `httpx2-pytest`.
 
 ### From responses
 
-| Feature           | responses                  | pytest-httpx2                |
+| Feature           | responses                  | httpx2-pytest                |
 |:------------------|:---------------------------|:----------------------------|
 | Add a response    | `responses.add()`          | `httpx_mock.add_response()` |
 | Add a callback    | `responses.add_callback()` | `httpx_mock.add_callback()` |
@@ -914,10 +914,10 @@ Here is how to migrate from well-known testing libraries to `pytest-httpx2`.
 
 #### Add a response or a callback
 
-Undocumented parameters means that they are unchanged between `responses` and `pytest-httpx2`.
+Undocumented parameters means that they are unchanged between `responses` and `httpx2-pytest`.
 Below is a list of parameters that will require a change in your code.
 
-| Parameter            | responses                           | pytest-httpx2                                                         |
+| Parameter            | responses                           | httpx2-pytest                                                         |
 |:---------------------|:------------------------------------|:---------------------------------------------------------------------|
 | method               | `method=responses.GET`              | `method="GET"`                                                       |
 | body (as bytes)      | `body=b"sample"`                    | `content=b"sample"`                                                  |
@@ -941,7 +941,7 @@ def test_response(responses: RequestsMock):
 
 ```
 
-Sample adding the same response with `pytest-httpx2`:
+Sample adding the same response with `httpx2-pytest`:
 ```python
 from pytest_httpx2 import HTTPXMock
 
@@ -957,17 +957,17 @@ def test_response(httpx_mock: HTTPXMock):
 
 ### From aioresponses
 
-| Feature        | aioresponses            | pytest-httpx2                               |
+| Feature        | aioresponses            | httpx2-pytest                               |
 |:---------------|:------------------------|:-------------------------------------------|
 | Add a response | `aioresponses.method()` | `httpx_mock.add_response(method="METHOD")` |
 | Add a callback | `aioresponses.method()` | `httpx_mock.add_callback(method="METHOD")` |
 
 #### Add a response or a callback
 
-Undocumented parameters means that they are unchanged between `responses` and `pytest-httpx2`.
+Undocumented parameters means that they are unchanged between `responses` and `httpx2-pytest`.
 Below is a list of parameters that will require a change in your code.
 
-| Parameter       | responses            | pytest-httpx2        |
+| Parameter       | responses            | httpx2-pytest        |
 |:----------------|:---------------------|:--------------------|
 | body (as bytes) | `body=b"sample"`     | `content=b"sample"` |
 | body (as str)   | `body="sample"`      | `text="sample"`     |
@@ -995,7 +995,7 @@ def test_response(mock_aioresponse):
 
 ```
 
-Sample adding the same response with `pytest-httpx2`:
+Sample adding the same response with `httpx2-pytest`:
 ```python
 def test_response(httpx_mock):
     httpx_mock.add_response(
