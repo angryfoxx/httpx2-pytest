@@ -6,8 +6,13 @@
       "changelog-path": "CHANGELOG.md",
       "include-component-in-tag": false,
       "package-name": "httpx2-pytest",
-      "release-as": "1.0.0",
-      "release-type": "python"
+      "release-type": "python",
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "pytest_httpx2/version.py"
+        }
+      ]
     }
   },
   "changelog-sections": [
