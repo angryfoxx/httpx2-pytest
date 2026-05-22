@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/pytest-httpx/${{ github.ref_name }}
+      url: https://pypi.org/project/httpx2-pytest/${{ github.ref_name }}
     permissions:
       id-token: write
     steps:
