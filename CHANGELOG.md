@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.0 (2026-05-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **httpx2:** migrate package to pytest_httpx2
+
+### Added
+
+* **httpx2:** migrate package to pytest_httpx2 ([f8dcd5a](https://github.com/angryfoxx/pytest_httpx2/commit/f8dcd5ad49273a22d3f4572c60fa2353241c801e))
+
+
+### Changed
+
+* clarify ecosystem and contributor workflow ([8a4fc58](https://github.com/angryfoxx/pytest_httpx2/commit/8a4fc589c8d93ccd6dce2bba0954c4d7c5f4ac53))
+* document breaking-commit format for release-please ([2901029](https://github.com/angryfoxx/pytest_httpx2/commit/2901029d9f3812d0de2f90a471bd68c229af1730))
+
+
+### Fixed
+
+* **release:** use manifest config and bootstrap fork history ([1c1a9e4](https://github.com/angryfoxx/pytest_httpx2/commit/1c1a9e45a076bd192da2c10ff0108916f6f6f145))
+
 ## [0.36.2] - 2026-04-09
 ### Fixed
 - Document how to ignore query parameters while matching on URL.
