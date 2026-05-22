@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.1.0 (2026-05-22)
+
+
+### Features
+
+* add support for `match_params` allowing partial params matching ([c5f1046](https://github.com/angryfoxx/pytest_httpx2/commit/c5f10462ddda3a21b6226a756538b0af79855f80))
+* add support for `match_params` allowing partial params matching ([48bed0c](https://github.com/angryfoxx/pytest_httpx2/commit/48bed0cdba3d5f78613369578e08639162fdd99e))
+
+
+### Documentation
+
+* clarify ecosystem and contributor workflow ([c30b143](https://github.com/angryfoxx/pytest_httpx2/commit/c30b143e1b302431879997e6f1f94fac64b045df))
+
 ## [0.36.2] - 2026-04-09
 ### Fixed
 - Document how to ignore query parameters while matching on URL.
