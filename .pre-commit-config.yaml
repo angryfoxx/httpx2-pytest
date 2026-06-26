@@ -24,7 +24,7 @@ repos:
       - id: tombi-lint
         args: [--offline]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 0c7b6c989466a93942def1f84baf36ddfcd60c83  # frozen: v0.15.14
+    rev: c59bba8fb259db0fec2bbb77ad8ba51ea7341b56  # frozen: v0.15.20
     hooks:
       - id: ruff-check
         args: [--fix]
