@@ -12,7 +12,7 @@ jobs:
 
     steps:
       # actions/checkout v6.0.2
-      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
+      - uses: actions/checkout@b9e0990d219a03df7633c93f6f005a8fecbcab22
       # astral-sh/setup-uv v8.1.0
       - name: Install uv
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
