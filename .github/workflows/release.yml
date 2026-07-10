@@ -44,7 +44,7 @@ jobs:
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       # actions/checkout v6.0.2
-      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
+      - uses: actions/checkout@e8d4307400f9427dba7cb98e488d6ab85f1cec5f
       - name: Verify requested tag matches manifest version
         env:
           REQUESTED_TAG: ${{ inputs.tag }}
