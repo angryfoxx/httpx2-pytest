@@ -17,7 +17,7 @@ repos:
     hooks:
       - id: ryl
   - repo: https://github.com/tombi-toml/tombi-pre-commit
-    rev: 92b75e984d8f88579b21001de632b48149d8166a  # frozen: v0.11.6
+    rev: 5421ca8ca3d6a659b6c097512b486395676a6af1  # frozen: v1.2.4
     hooks:
       - id: tombi-format
         args: [--offline]
