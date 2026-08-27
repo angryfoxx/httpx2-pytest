@@ -15,6 +15,6 @@ A clear and concise description of what you expected to happen.
 
 **Steps to reproduce**
 ```python
-def test_issue(httpx_mock):
+def test_issue(httpx2_mock):
    ...
 ```

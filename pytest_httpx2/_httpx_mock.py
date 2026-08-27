@@ -13,7 +13,7 @@ from pytest_httpx2._request_matcher import _RequestMatcher
 
 class HTTPXMock:
     """
-    This class is only exposed for `httpx_mock` fixture type hinting purpose.
+    This class is only exposed for `httpx2_mock` fixture type hinting purpose.
     """
 
     def __init__(self, options: _HTTPXMockOptions) -> None:
