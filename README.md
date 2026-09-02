@@ -127,7 +127,9 @@ def test_url_as_pattern(httpx2_mock: HTTPXMock):
 
 
 def test_url_as_httpx2_url(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(url=httpx2.URL("https://test_url", params={"a": "1", "b": "2"}))
+    httpx2_mock.add_response(
+        url=httpx2.URL("https://test_url", params={"a": "1", "b": "2"})
+    )
 
     with httpx2.Client() as client:
         response = client.get("https://test_url?a=1&b=2")
@@ -164,14 +166,18 @@ import httpx2
 from pytest_httpx2 import HTTPXMock
 from unittest.mock import ANY
 
+
 def test_partial_params_matching(httpx2_mock: HTTPXMock):
     httpx2_mock.add_response(url="https://test_url", match_params={"a": 1, "b": ANY})
 
     with httpx2.Client() as client:
         response = client.get("https://test_url?a=1&b=2")
 
+
 def test_partial_multi_params_matching(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(url="https://test_url", match_params={"a": ["1", 3], "b": ["2", ANY]})
+    httpx2_mock.add_response(
+        url="https://test_url", match_params={"a": ["1", 3], "b": ["2", ANY]}
+    )
 
     with httpx2.Client() as client:
         response = client.get("https://test_url?a=1&b=2&a=3&b=4")
@@ -223,7 +229,6 @@ def test_head(httpx2_mock: HTTPXMock):
 
     with httpx2.Client() as client:
         response = client.head("https://test_url")
-
 ```
 
 #### Matching on proxy URL
@@ -258,7 +263,7 @@ from pytest_httpx2 import HTTPXMock
 
 
 def test_headers_matching(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(match_headers={'User-Agent': 'python-httpx2/2.2.0'})
+    httpx2_mock.add_response(match_headers={"User-Agent": "python-httpx2/2.2.0"})
 
     with httpx2.Client() as client:
         response = client.get("https://test_url")
@@ -293,6 +298,7 @@ import httpx2
 from pytest_httpx2 import HTTPXMock
 from unittest.mock import ANY
 
+
 def test_json_matching(httpx2_mock: HTTPXMock):
     httpx2_mock.add_response(match_json={"a": "json", "b": 2})
 
@@ -319,11 +325,19 @@ Matching is performed on equality.
 import httpx2
 from pytest_httpx2 import HTTPXMock
 
+
 def test_multipart_matching(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(match_files={"name": ("file_name", b"File content")}, match_data={"field": "value"})
+    httpx2_mock.add_response(
+        match_files={"name": ("file_name", b"File content")},
+        match_data={"field": "value"},
+    )
 
     with httpx2.Client() as client:
-        response = client.post("https://test_url", files={"name": ("file_name", b"File content")}, data={"field": "value"})
+        response = client.post(
+            "https://test_url",
+            files={"name": ("file_name", b"File content")},
+            data={"field": "value"},
+        )
 ```
 
 Note that `match_content` or `match_json` cannot be provided if `match_files` is also provided.
@@ -340,7 +354,7 @@ from pytest_httpx2 import HTTPXMock
 
 
 def test_extensions_matching(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(match_extensions={'test': 'value'})
+    httpx2_mock.add_response(match_extensions={"test": "value"})
 
     with httpx2.Client() as client:
         response = client.get("https://test_url", extensions={"test": "value"})
@@ -358,7 +372,11 @@ from pytest_httpx2 import HTTPXMock
 
 
 def test_timeout_matching(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(match_extensions={'timeout': {'connect': 10, 'read': 10, 'write': 10, 'pool': 10}})
+    httpx2_mock.add_response(
+        match_extensions={
+            "timeout": {"connect": 10, "read": 10, "write": 10, "pool": 10}
+        }
+    )
 
     with httpx2.Client() as client:
         response = client.get("https://test_url", timeout=10)
@@ -377,8 +395,9 @@ def test_json(httpx2_mock: HTTPXMock):
     httpx2_mock.add_response(json=[{"key1": "value1", "key2": "value2"}])
 
     with httpx2.Client() as client:
-        assert client.get("https://test_url").json() == [{"key1": "value1", "key2": "value2"}]
-
+        assert client.get("https://test_url").json() == [
+            {"key1": "value1", "key2": "value2"}
+        ]
 ```
 
 Note that the `content-type` header will be set to `application/json` by default in the response.
@@ -397,7 +416,6 @@ def test_str_body(httpx2_mock: HTTPXMock):
 
     with httpx2.Client() as client:
         assert client.get("https://test_url").text == "This is my UTF-8 content"
-
 ```
 
 Use `content` parameter to reply with a custom body by providing bytes.
@@ -412,7 +430,6 @@ def test_bytes_body(httpx2_mock: HTTPXMock):
 
     with httpx2.Client() as client:
         assert client.get("https://test_url").content == b"This is my bytes content"
-
 ```
 
 Use `html` parameter to reply with a custom body by providing UTF-8 encoded string.
@@ -426,8 +443,10 @@ def test_html_body(httpx2_mock: HTTPXMock):
     httpx2_mock.add_response(html="<body>This is <p> HTML content</body>")
 
     with httpx2.Client() as client:
-        assert client.get("https://test_url").text == "<body>This is <p> HTML content</body>"
-
+        assert (
+            client.get("https://test_url").text
+            == "<body>This is <p> HTML content</body>"
+        )
 ```
 
 ### Reply by streaming chunks
@@ -440,6 +459,7 @@ Note that `pytest_httpx2.IteratorStream` can be used to provide an iterable.
 import httpx2
 import pytest
 from pytest_httpx2 import HTTPXMock, IteratorStream
+
 
 def test_sync_streaming(httpx2_mock: HTTPXMock):
     httpx2_mock.add_response(stream=IteratorStream([b"part 1", b"part 2"]))
@@ -455,8 +475,10 @@ async def test_async_streaming(httpx2_mock: HTTPXMock):
 
     async with httpx2.AsyncClient() as client:
         async with client.stream(method="GET", url="https://test_url") as response:
-            assert [part async for part in response.aiter_raw()] == [b"part 1", b"part 2"]
-
+            assert [part async for part in response.aiter_raw()] == [
+                b"part 1",
+                b"part 2",
+            ]
 ```
 
 ### Add multipart response
@@ -472,10 +494,18 @@ from pytest_httpx2 import HTTPXMock
 
 
 def test_multipart_body(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(stream=MultipartStream(data={"key1": "value1"}, files={"file1": b"content of file 1"}, boundary=b"2256d3a36d2a61a1eba35a22bee5c74a"))
+    httpx2_mock.add_response(
+        stream=MultipartStream(
+            data={"key1": "value1"},
+            files={"file1": b"content of file 1"},
+            boundary=b"2256d3a36d2a61a1eba35a22bee5c74a",
+        )
+    )
 
     with httpx2.Client() as client:
-        assert client.get("https://test_url").text == '''--2256d3a36d2a61a1eba35a22bee5c74a\r
+        assert (
+            client.get("https://test_url").text
+            == """--2256d3a36d2a61a1eba35a22bee5c74a\r
 Content-Disposition: form-data; name="key1"\r
 \r
 value1\r
@@ -485,8 +515,8 @@ Content-Type: application/octet-stream\r
 \r
 content of file 1\r
 --2256d3a36d2a61a1eba35a22bee5c74a--\r
-'''
-
+"""
+        )
 ```
 
 ### Add non 200 response
@@ -503,7 +533,6 @@ def test_status_code(httpx2_mock: HTTPXMock):
 
     with httpx2.Client() as client:
         assert client.get("https://test_url").status_code == 404
-
 ```
 
 ### Reply with custom headers
@@ -536,7 +565,6 @@ def test_headers_as_httpx2_headers(httpx2_mock: HTTPXMock):
 
     with httpx2.Client() as client:
         assert client.get("https://test_url").headers["x-header1"] == "Test value"
-
 ```
 
 #### Reply with cookies
@@ -559,12 +587,13 @@ def test_cookie(httpx2_mock: HTTPXMock):
 
 
 def test_cookies(httpx2_mock: HTTPXMock):
-    httpx2_mock.add_response(headers=[("set-cookie", "key=value"), ("set-cookie", "key2=value2")])
+    httpx2_mock.add_response(
+        headers=[("set-cookie", "key=value"), ("set-cookie", "key2=value2")]
+    )
 
     with httpx2.Client() as client:
         response = client.get("https://test_url")
     assert dict(response.cookies) == {"key": "value", "key2": "value2"}
-
 ```
 
 
@@ -582,7 +611,6 @@ def test_http_version(httpx2_mock: HTTPXMock):
 
     with httpx2.Client() as client:
         assert client.get("https://test_url").http_version == "HTTP/2.0"
-
 ```
 
 ## Add callbacks
@@ -608,7 +636,8 @@ from pytest_httpx2 import HTTPXMock
 def test_dynamic_response(httpx2_mock: HTTPXMock):
     def custom_response(request: httpx2.Request):
         return httpx2.Response(
-            status_code=200, json={"url": str(request.url)},
+            status_code=200,
+            json={"url": str(request.url)},
         )
 
     httpx2_mock.add_callback(custom_response)
@@ -616,7 +645,6 @@ def test_dynamic_response(httpx2_mock: HTTPXMock):
     with httpx2.Client() as client:
         response = client.get("https://test_url")
         assert response.json() == {"url": "https://test_url"}
-
 ```
 
 Alternatively, callbacks can also be asynchronous.
@@ -635,7 +663,8 @@ async def test_dynamic_async_response(httpx2_mock: HTTPXMock):
     async def simulate_network_latency(request: httpx2.Request):
         await asyncio.sleep(1)
         return httpx2.Response(
-            status_code=200, json={"url": str(request.url)},
+            status_code=200,
+            json={"url": str(request.url)},
         )
 
     httpx2_mock.add_callback(simulate_network_latency)
@@ -646,9 +675,8 @@ async def test_dynamic_async_response(httpx2_mock: HTTPXMock):
             # Response will be received after one second
             client.get("https://test_url"),
             # Response will instantly be received (1 second before the first request)
-            client.get("https://test_url")
+            client.get("https://test_url"),
         )
-
 ```
 
 ### Raising exceptions
@@ -669,7 +697,6 @@ def test_exception_raising(httpx2_mock: HTTPXMock):
     with httpx2.Client() as client:
         with pytest.raises(httpx2.ReadTimeout):
             client.get("https://test_url")
-
 ```
 
 #### In case no response can be found
@@ -689,7 +716,6 @@ def test_timeout(httpx2_mock: HTTPXMock):
     with httpx2.Client() as client:
         with pytest.raises(httpx2.TimeoutException):
             client.get("https://test_url")
-
 ```
 
 ## Check sent requests
@@ -747,9 +773,9 @@ Refer to [available options](#available-options) for an exhaustive list of optio
 ```python
 import pytest
 
+
 @pytest.mark.httpx2_mock(assert_all_responses_were_requested=False)
-def test_something(httpx2_mock):
-    ...
+def test_something(httpx2_mock): ...
 ```
 
 ### Per module
@@ -766,9 +792,12 @@ This should be set in the root `conftest.py` file.
 ```python
 import pytest
 
+
 def pytest_collection_modifyitems(session, config, items):
     for item in items:
-        item.add_marker(pytest.mark.httpx2_mock(assert_all_responses_were_requested=False))
+        item.add_marker(
+            pytest.mark.httpx2_mock(assert_all_responses_were_requested=False)
+        )
 ```
 
 > [!IMPORTANT]
@@ -804,6 +833,7 @@ you can use the `httpx2_mock` marker `assert_all_responses_were_requested` optio
 ```python
 import pytest
 
+
 @pytest.mark.httpx2_mock(assert_all_responses_were_requested=False)
 def test_fewer_requests_than_expected(httpx2_mock):
     # Even if this response never received a corresponding request, the test will not fail at teardown
@@ -815,6 +845,7 @@ Meaning you can still register a response that will be checked for execution at 
 
 ```python
 import pytest
+
 
 @pytest.mark.httpx2_mock(assert_all_responses_were_requested=False)
 def test_force_expected_request(httpx2_mock):
@@ -835,6 +866,7 @@ You can use the `httpx2_mock` marker `assert_all_requests_were_expected` option 
 import pytest
 import httpx2
 
+
 @pytest.mark.httpx2_mock(assert_all_requests_were_expected=False)
 def test_more_requests_than_expected(httpx2_mock):
     with httpx2.Client() as client:
@@ -851,6 +883,7 @@ If you want to add a response once, while allowing it to match more than once, y
 
 ```python
 import httpx2
+
 
 def test_more_requests_than_responses(httpx2_mock):
     httpx2_mock.add_response(is_reusable=True)
@@ -872,6 +905,7 @@ With this option, in case all matching responses have been sent at least once, t
 ```python
 import pytest
 import httpx2
+
 
 @pytest.mark.httpx2_mock(can_send_already_matched_responses=True)
 def test_more_requests_than_responses(httpx2_mock):
@@ -896,7 +930,10 @@ Returning `True` will ensure that the request is handled by `httpx2-pytest` (moc
 import pytest
 import httpx2
 
-@pytest.mark.httpx2_mock(should_mock=lambda request: request.url.host != "www.my_local_test_host")
+
+@pytest.mark.httpx2_mock(
+    should_mock=lambda request: request.url.host != "www.my_local_test_host"
+)
 def test_partial_mock(httpx2_mock):
     httpx2_mock.add_response()
 
@@ -969,6 +1006,7 @@ Sample adding a response with `responses`:
 ```python
 from responses import RequestsMock
 
+
 def test_response(responses: RequestsMock):
     responses.add(
         method=responses.GET,
@@ -976,12 +1014,12 @@ def test_response(responses: RequestsMock):
         body=b"This is the response content",
         status=400,
     )
-
 ```
 
 Sample adding the same response with `httpx2-pytest`:
 ```python
 from pytest_httpx2 import HTTPXMock
+
 
 def test_response(httpx2_mock: HTTPXMock):
     httpx2_mock.add_response(
@@ -990,7 +1028,6 @@ def test_response(httpx2_mock: HTTPXMock):
         content=b"This is the response content",
         status_code=400,
     )
-
 ```
 
 ### From aioresponses
@@ -1030,7 +1067,6 @@ def test_response(mock_aioresponse):
         body=b"This is the response content",
         status=400,
     )
-
 ```
 
 Sample adding the same response with `httpx2-pytest`:
@@ -1042,5 +1078,4 @@ def test_response(httpx2_mock):
         content=b"This is the response content",
         status_code=400,
     )
-
 ```

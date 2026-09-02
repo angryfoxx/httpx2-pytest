@@ -80,13 +80,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```python
   import pytest
 
-  @pytest.mark.httpx_mock(non_mocked_hosts=["my_local_test_host"])
-  def test_previous_behavior(httpx_mock):
-      ...
 
-  @pytest.mark.httpx_mock(should_mock=lambda request: request.url.host not in ["my_local_test_host"])
-  def test_new_behavior(httpx_mock):
-      ...
+  @pytest.mark.httpx_mock(non_mocked_hosts=["my_local_test_host"])
+  def test_previous_behavior(httpx_mock): ...
+
+
+  @pytest.mark.httpx_mock(
+      should_mock=lambda request: request.url.host not in ["my_local_test_host"]
+  )
+  def test_new_behavior(httpx_mock): ...
   ```
   Please note that your hosts might need to be prefixed with `www.` depending on your usage.
 
@@ -136,10 +138,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   # Apply marker to whole module
   pytestmark = pytest.mark.httpx_mock(assert_all_responses_were_requested=False)
 
+
   # Or to specific tests
   @pytest.mark.httpx_mock(non_mocked_hosts=[...])
-  def test_foo(httpx_mock):
-      ...
+  def test_foo(httpx_mock): ...
   ```
   - The following options are available:
     - `assert_all_responses_were_requested` (boolean), defaulting to `True`.
