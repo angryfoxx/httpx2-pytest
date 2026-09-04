@@ -17,21 +17,20 @@ __all__ = (
 )
 
 
-def _httpx_mock_options(request: FixtureRequest) -> _HTTPXMockOptions:
-    httpx_mock_markers: dict = {}
-    for marker_name in ("httpx_mock", "httpx2_mock"):
-        for marker in request.node.iter_markers(marker_name):
-            httpx_mock_markers = marker.kwargs | httpx_mock_markers
+def _httpx2_mock_options(request: FixtureRequest) -> _HTTPXMockOptions:
+    httpx2_mock_markers: dict = {}
+    for marker in request.node.iter_markers("httpx2_mock"):
+        httpx2_mock_markers = marker.kwargs | httpx2_mock_markers
     __tracebackhide__ = methodcaller("errisinstance", TypeError)
-    return _HTTPXMockOptions(**httpx_mock_markers)
+    return _HTTPXMockOptions(**httpx2_mock_markers)
 
 
 @pytest.fixture
-def httpx_mock(
+def httpx2_mock(
     monkeypatch: MonkeyPatch,
     request: FixtureRequest,
 ) -> Generator[HTTPXMock, None, None]:
-    options = _httpx_mock_options(request)
+    options = _httpx2_mock_options(request)
     mock = HTTPXMock(options)
 
     # Mock synchronous requests
@@ -73,12 +72,6 @@ def httpx_mock(
         mock.reset()
 
 
-@pytest.fixture
-def httpx2_mock(httpx_mock: HTTPXMock) -> HTTPXMock:
-    """Alias of :func:`httpx_mock` for HTTPX2-oriented test suites."""
-    return httpx_mock
-
-
 def pytest_configure(config: Config) -> None:
     marker_signature = (
         "*, assert_all_responses_were_requested=True, "
@@ -88,9 +81,5 @@ def pytest_configure(config: Config) -> None:
     )
     config.addinivalue_line(
         "markers",
-        f"httpx_mock({marker_signature}): Configure httpx_mock / httpx2_mock fixtures.",
-    )
-    config.addinivalue_line(
-        "markers",
-        f"httpx2_mock({marker_signature}): Configure httpx_mock / httpx2_mock fixtures.",
+        f"httpx2_mock({marker_signature}): Configure the httpx2_mock fixture.",
     )
