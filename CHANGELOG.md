@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0](https://github.com/angryfoxx/httpx2-pytest/compare/v1.0.1...v2.0.0) (2026-09-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* the legacy httpx_mock fixture is removed to enable running this plugin alongside pytest-httpx
+
+### Added
+
+* drop the legacy httpx_mock fixture ([#52](https://github.com/angryfoxx/httpx2-pytest/issues/52)) ([a093d79](https://github.com/angryfoxx/httpx2-pytest/commit/a093d79110e3ba155349049ce2c418f572f42d34))
+
 ## [1.0.1](https://github.com/angryfoxx/httpx2-pytest/compare/v1.0.0...v1.0.1) (2026-05-22)
 
 
